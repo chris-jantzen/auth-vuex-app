@@ -7,10 +7,11 @@ const state = {
 }
 
 const getters = {
+  isAuthenticated: () => state.authenticated,
   getUserInfo: () => ({
     username: state.username,
-    email: state.email,
-  }),
+    email: state.email
+  })
 }
 
 const baseRoute = 'http://localhost:8081/auth'
@@ -18,24 +19,34 @@ const baseRoute = 'http://localhost:8081/auth'
 // async
 const actions = {
   authenticate: async ({ commit }, password) => {
-    const res = await axios.post(`${baseRoute}/login`, {
-      username: state.username,
-      password,
-    })
-    if (res.body.data.success) {
-      commit('authenticated', true)
+    try {
+      const res = await axios.post(`${baseRoute}/login`, {
+        username: state.username,
+        password
+      })
+      if (res.data.success) {
+        commit('setAuthenticated', true)
+        return true
+      } else {
+        return false
+      }
+    } catch (err) {
+      console.error(err.message || 'Error');
     }
   },
-  signUp: async (password) => {
-    const res = await axios.post(`${baseRoute}/signup`, {
-      email: state.username,
-      username: state.username,
-      password: password,
-    })
+  signUp: async ({ commit }, password) => {
+    const res = await axios.post(
+      `${baseRoute}/signup`,
+      {
+        email: state.username,
+        username: state.username,
+        password: password
+      }
+    )
     if (res.body.data.success) {
-      commit('authenticated', true)
+      commit('setAuthenticated', true)
     }
-  },
+  }
 }
 
 // sync
@@ -46,6 +57,9 @@ const mutations = {
   setUsername: (state, username) => {
     state.username = username
   },
+  setAuthenticated: (state, authenticated) => {
+    state.authenticated = authenticated
+  }
 }
 
 export default {

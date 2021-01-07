@@ -1,5 +1,5 @@
 const express = require('express')
-const User = require('../models')
+const User = require('../models/user')
 
 const router = express.Router()
 
@@ -23,11 +23,15 @@ router.post('/login', (req, res) => {
     return err
       ? res.status(400).send({
           success: false,
-          message: 'Error Finding User',
+          message: 'Error Finding User'
         })
       : res.status(200).send({
           success: true,
-          user: user[0],
+          user: {
+            username: user[0].username,
+            email: user[0].email,
+            id: user[0]['_id']
+          }
         })
   })
 })

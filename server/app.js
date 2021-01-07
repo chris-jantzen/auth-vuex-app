@@ -2,7 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
 
-const authRouter = require('./routes/authRoutes')
+const { authRouter } = require('./routes/authRoutes')
 
 const app = express()
 
@@ -26,4 +26,4 @@ app.use(
 
 app.use('/auth', authRouter)
 
-app.listen(8081, () => console.log('Server Listening...'))
+app.listen(8081, () => console.log('Server Listening on port 8081...'))

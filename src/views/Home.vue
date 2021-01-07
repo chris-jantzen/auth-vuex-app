@@ -5,15 +5,17 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'Home',
-  components: {
+  computed: mapGetters(['isAuthenticated']),
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      console.log(vm.isAuthenticated)
+    })
   }
 }
 </script>
 
 <style scoped>
-.home {
-  margin: auto;
-}
 </style>

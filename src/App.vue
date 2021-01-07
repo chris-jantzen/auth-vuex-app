@@ -1,5 +1,5 @@
 <template>
-  <router-view/>
+  <router-view id="base"/>
 </template>
 
 <style>
@@ -11,16 +11,18 @@
   color: #2c3e50;
 }
 
-#nav {
-  padding: 30px;
+#base {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>
