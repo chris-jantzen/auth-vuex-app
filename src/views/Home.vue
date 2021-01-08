@@ -11,7 +11,9 @@ export default {
   computed: mapGetters(['isAuthenticated']),
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      console.log(vm.isAuthenticated)
+      if (!vm.isAuthenticated) {
+        vm.$router.replace({ name: 'Welcome' })
+      }
     })
   }
 }
