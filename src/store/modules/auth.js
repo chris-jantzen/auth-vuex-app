@@ -42,7 +42,7 @@ const actions = {
         username: state.username,
         password: password
       })
-      if (res.body.data.success) {
+      if (res.data.success) {
         commit('setAuthenticated', true)
         return true
       } else {
