@@ -27,7 +27,6 @@ router.post('/login', (req, res) => {
         message: 'Error Finding User'
       })
     } else {
-      console.log(user);
       if (user.length) {
         const { username, email, _id } = user[0]
         return res.status(200).send({
