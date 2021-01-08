@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <h1>Login</h1>
+    <h2 v-if="authenticationError" class="error">Error logging in</h2>
     <form @submit="onSubmit">
       <div class="info-input">
         <label for="username">Username</label>
@@ -22,7 +23,8 @@ export default {
   data() {
     return {
       username: '',
-      password: ''
+      password: '',
+      authenticationError: false
     }
   },
   watch: {
@@ -35,7 +37,14 @@ export default {
     ...mapActions(['authenticate']),
     onSubmit(e) {
       e.preventDefault()
-      this.authenticate(this.password).then(res => console.log(res))
+      this.authenticate(this.password)
+        .then((res) => {
+          if (res) {
+            this.$router.push({ name: 'Home' })
+          } else {
+            this.authenticationError = true
+          }
+        })
     }
   }
 }
@@ -48,5 +57,9 @@ export default {
 
 input[type="submit"] {
   margin-top: 1rem;
+}
+
+.error {
+  color: red;
 }
 </style>

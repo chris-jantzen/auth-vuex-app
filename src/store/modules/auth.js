@@ -32,19 +32,25 @@ const actions = {
       }
     } catch (err) {
       console.error(err.message || 'Error');
+      return false
     }
   },
   signUp: async ({ commit }, password) => {
-    const res = await axios.post(
-      `${baseRoute}/signup`,
-      {
+    try {
+      const res = await axios.post(`${baseRoute}/signup`, {
         email: state.username,
         username: state.username,
         password: password
+      })
+      if (res.body.data.success) {
+        commit('setAuthenticated', true)
+        return true
+      } else {
+        return false
       }
-    )
-    if (res.body.data.success) {
-      commit('setAuthenticated', true)
+    } catch (err) {
+      console.error(err.message)
+      return false
     }
   }
 }
